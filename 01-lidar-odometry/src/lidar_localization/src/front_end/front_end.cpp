@@ -22,8 +22,11 @@ FrontEnd::FrontEnd()
     InitWithConfig();
 }
 
+// 带配置的初始化
 bool FrontEnd::InitWithConfig() {
+    // 设置配置参数路径
     std::string config_file_path = WORK_SPACE_PATH + "/config/front_end/config.yaml";
+    // 初始化一个node，包含所有的参数
     YAML::Node config_node = YAML::LoadFile(config_file_path);
 
     InitDataPath(config_node);
@@ -42,13 +45,16 @@ bool FrontEnd::InitParam(const YAML::Node& config_node) {
     return true;
 }
 
+// 初始化**所有数据**的路径
 bool FrontEnd::InitDataPath(const YAML::Node& config_node) {
+    // 提取yaml文件中数据的路径， string类型
     data_path_ = config_node["data_path"].as<std::string>();
     if (data_path_ == "./") {
         data_path_ = WORK_SPACE_PATH;
     }
     data_path_ += "/slam_data";
 
+    // ？？？什么是boost
     if (boost::filesystem::is_directory(data_path_)) {
         boost::filesystem::remove_all(data_path_);
     }
@@ -61,6 +67,7 @@ bool FrontEnd::InitDataPath(const YAML::Node& config_node) {
         LOG(INFO) << "Point Cloud Map Output Path: " << data_path_;
     }
 
+    // 创建keyframe的保存路径
     std::string key_frame_path = data_path_ + "/key_frames";
     boost::filesystem::create_directory(data_path_ + "/key_frames");
     if (!boost::filesystem::is_directory(key_frame_path)) {
@@ -73,6 +80,7 @@ bool FrontEnd::InitDataPath(const YAML::Node& config_node) {
     return true;
 }
 
+// 初始化点云匹配方法， 选择一个方法并注册
 bool FrontEnd::InitRegistration(std::shared_ptr<RegistrationInterface>& registration_ptr, const YAML::Node& config_node) {
     std::string registration_method = config_node["registration_method"].as<std::string>();
     LOG(INFO) << "Point Cloud Registration Method: " << registration_method;
