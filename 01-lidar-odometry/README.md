@@ -4,6 +4,24 @@
 
 ---
 
+## Deliveries
+
+作业成果如下：
+
+跑通提供的工程框架：
+
+<img src="doc/1.png" alt="question_1" width="100%">
+
+---
+
+使用evo计算出分段统计误差和整体轨迹误差:
+
+<img src="doc/2_1.png" alt="question_2_2" width="100%">
+<img src="doc/2_2.png" alt="question_2_2" width="100%">
+
+---
+
+# Tutorial
 ## Overview
 
 本作业旨在实现主流的激光前端里程计算法.
