@@ -4,20 +4,31 @@
 
 ---
 
-## Deliveries
-
-作业成果如下：
+## 初次作业：
 
 跑通提供的工程框架：
 
-<img src="doc/1.png" alt="question_1" width="100%">
+<img src="doc/1.png" alt="question_1" width="60%">
 
 ---
 
 使用evo计算出分段统计误差和整体轨迹误差:
 
-<img src="doc/2_1.png" alt="question_2_2" width="100%">
-<img src="doc/2_2.png" alt="question_2_2" width="100%">
+<img src="doc/2_1.png" alt="question_2_2" width="60%">
+<img src="doc/2_2.png" alt="question_2_2" width="60%">
+
+---
+
+## 迭代成果：
+* 在[此处](src/lidar_localization/src/models/registration/icp_svd_registration.cpp#L162), 增加了里程计算法的**实现**
+
+运行效果如下:
+<img src="doc/3_1.png" alt="question_3_1" width="60%">
+可见，后期误差越来越大，由于基础SVD的ICP算法局限性，初值设定不好会导致累计误差越来越大
+
+最后，用evo计算出了分段统计误差和整体轨迹误差:
+<img src="doc/3_2.png" alt="qustion_3_2" width="60%">
+<img src="doc/3_3.png" alt="qustion_3_3" width="60%">
 
 ---
 
@@ -26,7 +37,7 @@
 
 本作业旨在实现主流的激光前端里程计算法.
 
----
+
 
 ## Getting Started
 
