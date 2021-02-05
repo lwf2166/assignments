@@ -23,6 +23,7 @@
 * 在[此处](src/lidar_localization/src/models/registration/icp_svd_registration.cpp#L162), 增加了里程计算法的**实现**
 
 运行效果如下:
+
 <img src="doc/3_1.png" alt="question_3_1" width="60%">
 可见，后期误差越来越大，由于基础SVD的ICP算法局限性，初值设定不好会导致累计误差越来越大
 
