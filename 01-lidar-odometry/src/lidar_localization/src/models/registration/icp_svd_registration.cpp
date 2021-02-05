@@ -166,16 +166,58 @@ void ICPSVDRegistration::GetTransform(
 ) {
     const size_t N = xs.size();
 
-    // TODO -- find centroids of mu_x and mu_y:
+    // find centroids of mu_x and mu_y:
+    Eigen::Vector3f mu_x(0, 0, 0);
+    Eigen::Vector3f mu_y(0, 0, 0);
 
-    // TODO -- build H:
+    for (size_t i = 0; i < N; ++i)
+	{
+		mu_x += xs.at(i);
+		mu_y += ys.at(i);
+	}
 
-    // TODO -- solve R:
+	mu_x = mu_x / N;
+	mu_y = mu_y / N;
 
-    // TODO -- solve t:
+    // build H:
+    std::vector<Eigen::Vector3f> xs_prime(N), ys_prime(N);
+    for (size_t i = 0; i < N; ++i) {
+        xs_prime[i] = xs.at(i) - mu_x;
+        ys_prime[i] = ys.at(i) - mu_y;
+    }
 
-    // set output:
+    Eigen::Matrix3f H = Eigen::Matrix3f::Zero();
+    for (size_t i = 0; i < N; ++i) {
+        H += ys_prime.at(i) * xs_prime.at(i).transpose();
+    }
+
+    // solve R:
+    Eigen::JacobiSVD<Eigen::Matrix3f> svd(H, Eigen::ComputeFullU | Eigen::ComputeFullV);
+    Eigen::Matrix3f U = svd.matrixU();
+    Eigen::Matrix3f V = svd.matrixV();
+    Eigen::Matrix3f R = V * U.transpose();
+
+    // solve t:
+    Eigen::Vector3f t = mu_x - R * mu_y;
+
+    // set output
     transformation_.setIdentity();
+    transformation_.block<3, 3>(0, 0) = R;
+    transformation_.block<3, 1>(0, 3) = t;
+
+    // 笨办法
+    // transformation_(0, 0) = R(0, 0);
+    // transformation_(0, 1) = R(0, 1);
+    // transformation_(0, 2) = R(0, 2);
+    // transformation_(0, 3) = t(0);
+    // transformation_(1, 0) = R(1, 0);
+    // transformation_(1, 1) = R(1, 1);
+    // transformation_(1, 2) = R(1, 2);
+    // transformation_(1, 3) = t(1);
+    // transformation_(2, 0) = R(2, 0);
+    // transformation_(2, 1) = R(2, 1);
+    // transformation_(2, 2) = R(2, 2);
+    // transformation_(2, 3) = t(2);
 }
 
 bool ICPSVDRegistration::IsSignificant(
