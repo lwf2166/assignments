@@ -99,6 +99,7 @@ bool FrontEnd::InitRegistration(std::shared_ptr<RegistrationInterface>& registra
     return true;
 }
 
+// 初始化滤波器
 bool FrontEnd::InitFilter(std::string filter_user, std::shared_ptr<CloudFilterInterface>& filter_ptr, const YAML::Node& config_node) {
     std::string filter_mothod = config_node[filter_user + "_filter"].as<std::string>();
     LOG(INFO) << filter_user << "Point Cloud Filter Method: " << filter_mothod;
