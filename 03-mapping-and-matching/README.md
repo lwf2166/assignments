@@ -4,7 +4,13 @@
 
 ---
 
-## Overview
+## 作业结果
+### 及格部分
+<img src="doc/images/03_1.png" alt="Terminator" width="80%">
+
+---
+
+## 教学
 
 本作业旨在演示建图流程以及实现基于地图信息的定位初始化.
 
